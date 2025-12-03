@@ -3,24 +3,45 @@
 ```
 import time
 import logging
-from kernels import register_kernel_mapping
-from transformers import AutoModelForCausalLM, AutoTokenizer, KernelConfig
+from typing import Union
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+from kernels import (
+    Device,
+    LayerRepository,
+    LocalLayerRepository,
+    Mode,
+    register_kernel_mapping,
+)
+
 
 # Set the level to `DEBUG` to see which kernels are being called.
 logging.basicConfig(level=logging.DEBUG)
 
-model_name = "Qwen/Qwen3-0.6B"
+model_name = "/root/Qwen3-0.6B"
 
-_KERNELS_MAPPING = {
+_KERNELS_MAPPING: dict[str, dict[Union[Device, str], LocalLayerRepository]] = {
     "RMSNorm": {
         "npu": LocalLayerRepository(
-            repo_path="/home/rmsnorm",
+            repo_path="/root/rmsnorm/",
             package_name="rmsnorm",
             layer_name="rmsnorm",
         )
     }
 }
 
+# _KERNELS_MAPPING: dict[str, dict[Union[Device, str], LayerRepository]] = {
+#     "RMSNorm": {
+#         "npu": {
+#             Mode.INFERENCE: LayerRepository(
+#                 repo_id="kernels-ext-npu/rmsnorm",
+#                layer_name="rmsnorm",
+#             )
+#         },
+#     },
+# }
+
+# inherit_mapping=False,
 register_kernel_mapping(_KERNELS_MAPPING)
 
 # load the tokenizer and the model
@@ -53,8 +74,8 @@ for _ in range(5):
         max_new_tokens=32768
     )
     print("runtime: ", time.time()-start_time)
-
     output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist()
     content = tokenizer.decode(output_ids, skip_special_tokens=True).strip("\n")
     print("content:", content)
+
 ```
