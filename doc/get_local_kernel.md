@@ -3,6 +3,7 @@
 ```
 import time
 import logging
+from pathlib import Path
 from typing import Union
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -23,28 +24,17 @@ model_name = "/root/Qwen3-0.6B"
 _KERNELS_MAPPING: dict[str, dict[Union[Device, str], LocalLayerRepository]] = {
     "RMSNorm": {
         "npu": LocalLayerRepository(
-            repo_path="/root/rmsnorm/",
+            repo_path=Path("/root/rmsnorm/"),
             package_name="rmsnorm",
             layer_name="rmsnorm",
         )
     }
 }
 
-# _KERNELS_MAPPING: dict[str, dict[Union[Device, str], LayerRepository]] = {
-#     "RMSNorm": {
-#         "npu": {
-#             Mode.INFERENCE: LayerRepository(
-#                 repo_id="kernels-ext-npu/rmsnorm",
-#                layer_name="rmsnorm",
-#             )
-#         },
-#     },
-# }
-
 # inherit_mapping=False,
 register_kernel_mapping(_KERNELS_MAPPING)
 
-# load the tokenizer and the model
+# Load the tokenizer and the model
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
@@ -53,11 +43,9 @@ model = AutoModelForCausalLM.from_pretrained(
     use_kernels=True,
 )
 
-# prepare the model input
+# Prepare the model input
 prompt = "Output the first 20 digits of pi."
-messages = [
-    {"role": "user", "content": prompt}
-]
+messages = [{"role": "user", "content": prompt}]
 text = tokenizer.apply_chat_template(
     messages,
     tokenize=False,
@@ -66,16 +54,17 @@ text = tokenizer.apply_chat_template(
 )
 model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
 
+# Warm_up
+for _ in range(2):
+    generated_ids = model.generate(**model_inputs, max_new_tokens=32768)
+    output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
+
+# Print Runtime
 for _ in range(5):
-    # Print Runtime
     start_time = time.time()
-    generated_ids = model.generate(
-        **model_inputs,
-        max_new_tokens=32768
-    )
-    print("runtime: ", time.time()-start_time)
-    output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist()
+    generated_ids = model.generate(**model_inputs, max_new_tokens=32768)
+    print("runtime: ", time.time() - start_time)
+    output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
     content = tokenizer.decode(output_ids, skip_special_tokens=True).strip("\n")
     print("content:", content)
-
 ```
