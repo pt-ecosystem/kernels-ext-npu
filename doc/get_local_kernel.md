@@ -44,7 +44,7 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 # Prepare the model input
-prompt = "Output the first 20 digits of pi."
+prompt = "What is the result of 100 + 100?."
 messages = [{"role": "user", "content": prompt}]
 text = tokenizer.apply_chat_template(
     messages,
