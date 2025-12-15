@@ -1,5 +1,7 @@
 # triton-ascend安装(踩坑)指南
 
+注意：v3.2.0rc4后可以直接通过pip安装，这样更方便些。
+
 ## 使用平台
 https://www.autodl.com/
 
