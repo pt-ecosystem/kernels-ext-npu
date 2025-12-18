@@ -1,38 +1,33 @@
-这里演示的是从本地加载kernel使用的教程
+## 这里是 transformers 从本地加载 kernel 使用的教程
 
-```
+### 前言
+近期在 huggingface/transformers 中做了一些工作，使其可以通过 huggingface/kernels 加载本地 kernel 方便 debug 过程。
+
+- https://github.com/huggingface/transformers/pull/41542
+- https://github.com/huggingface/transformers/pull/42106
+- https://github.com/huggingface/transformers/pull/42358
+- https://github.com/huggingface/transformers/pull/42800
+
+
+### 示例脚本
+
+```python
 import time
 import logging
-from pathlib import Path
-from typing import Union
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-from kernels import (
-    Device,
-    LayerRepository,
-    LocalLayerRepository,
-    Mode,
-    register_kernel_mapping,
-)
+from transformers import AutoModelForCausalLM, AutoTokenizer, KernelConfig
 
 
 # Set the level to `DEBUG` to see which kernels are being called.
 logging.basicConfig(level=logging.DEBUG)
 
-model_name = "/root/Qwen3-0.6B"
+model_name = "/root/Qwen3"
 
-_KERNELS_MAPPING: dict[str, dict[Union[Device, str], LocalLayerRepository]] = {
-    "RMSNorm": {
-        "npu": LocalLayerRepository(
-            repo_path=Path("/root/rmsnorm/"),
-            package_name="rmsnorm",
-            layer_name="rmsnorm",
-        )
-    }
+kernel_mapping = {
+    "RMSNorm":
+        "/root/liger_kernels:LigerRMSNorm",
 }
 
-# inherit_mapping=False,
-register_kernel_mapping(_KERNELS_MAPPING)
+kernel_config = KernelConfig(kernel_mapping, use_local_kernel=True)
 
 # Load the tokenizer and the model
 tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -40,11 +35,11 @@ model = AutoModelForCausalLM.from_pretrained(
     model_name,
     torch_dtype="auto",
     device_map="auto",
-    use_kernels=True,
+    kernel_config=kernel_config
 )
 
 # Prepare the model input
-prompt = "What is the result of 100 + 100?."
+prompt = "Output the first 20 digits of pi."
 messages = [{"role": "user", "content": prompt}]
 text = tokenizer.apply_chat_template(
     messages,
