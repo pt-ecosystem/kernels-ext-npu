@@ -3,12 +3,7 @@
 ### 前言
 近期在 huggingface/transformers 中做了一些工作，使其可以通过 huggingface/kernels 加载本地 kernel 方便 debug 过程。
 
-- https://github.com/huggingface/transformers/pull/41542
-- https://github.com/huggingface/transformers/pull/42106
-- https://github.com/huggingface/transformers/pull/42358
-- https://github.com/huggingface/transformers/pull/42800
-
-
+huggingface/kernels + huggingface/transformers 的相关工作可以看这里：[https://github.com/pt-ecosystem/tracking-map](https://github.com/pt-ecosystem/tracking-map?tab=readme-ov-file#huggingfacekernels-%E5%8F%8A%E5%85%B6%E8%A1%8D%E7%94%9F%E5%B7%A5%E5%85%B7)
 ### 示例脚本
 
 ```python
