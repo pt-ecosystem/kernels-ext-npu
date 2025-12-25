@@ -27,6 +27,9 @@ transformers 在 v4.54.0 的 release 中首次介绍了 kernels 的集成，并�
 
 
 ## 几行代码直观感受kernels的使用
+
+### remote 使用
+
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import logging
@@ -74,6 +77,10 @@ content = tokenizer.decode(output_ids, skip_special_tokens=True).strip("\n")
 
 print("content:", content)
 ```
+
+### local 使用
+
+见: https://github.com/pt-ecosystem/kernels-ext-npu/blob/main/doc/get_local_kernel.md
 
 transformers:main 现已支持通过 AutoModel.from_pretrained() 指定 attn_implementation 入参使用 kernels 组件。
 
