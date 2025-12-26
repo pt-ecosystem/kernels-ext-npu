@@ -47,8 +47,8 @@ model = AutoModelForCausalLM.from_pretrained(
     model_name,
     torch_dtype="auto",
     device_map="auto",
-    # use_kernels=True,
-    # attn_implementation = "kernels-ext-npu/flash-attn2",
+    use_kernels=True,
+    attn_implementation = "kernels-ext-npu/flash-attn2",
 )
 
 # prepare the model input
