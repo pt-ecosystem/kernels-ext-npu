@@ -1,5 +1,7 @@
 # Introducing kernels-npu: A component for accelerating Transformers on NPU
 
+[2026.01.05] 我觉得将这份文档搬运至 Ascend/doc 项目中。也就意味着项目转正了！！！等我消息。
+
 ## 目录
 
 - 写在前面：kernels-npu是什么
