@@ -5,7 +5,7 @@ Kernel sources for https://huggingface.co/kernels-ext-npu
 
 ## 介绍 kernels-npu
 
-参考[文档](doc/Introducing_kernels_npu.md)
+参考[文档](https://ascend.github.io/docs/sources/kernels/index.html)
 
 
 ## 从源码中构建算子
