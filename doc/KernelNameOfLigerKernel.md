@@ -1,3 +1,11 @@
+benchmaek 和 test 不太一样，test 覆盖的是 transformers 中常用shape。而 benchmark 更像是一种压测，shape 取值有时比较极端。
+
+经实测：
+- 其中 8/32，压测直接通过
+- 其中 16/32，修改 x_shape 后可以通过
+- 剩余的 8/32，则有不同的报错需要处理。其中 torch._daymaic 报错有3条。
+
+
 | File name                       | Kernel name                                    |
 |---------------------------------|------------------------------------------------|
 | cross_entropy.py                | liger_cross_entropy_kernel                     |
