@@ -2,7 +2,7 @@
 
 ## 前言
 
-既有GPU生态训练软件的定义可能有点广泛，本文就暂定围绕 transformers, verl, VeOmni 这几个我实际使用过的软件去说明。
+既有GPU生态训练软件的定义可能有点广泛，本文就暂定围绕 LLaMA-Factory, verl, VeOmni 这几个我实际使用过的软件去说明。
 
 在训练软件中做第三方device的亲和加速，方法也很多。但其中最立竿见影的，也是最常用手段是将 torch_npu 的一些亲和 API 直接以 patch 的形式合入原仓。
 
