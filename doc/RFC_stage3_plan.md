@@ -126,7 +126,7 @@ full: ❌
 no_grad_forward: ❌
 <img width="1000" height="600" alt="cross_entropy_speed_no-grad-forward" src="https://github.com/user-attachments/assets/9b94cb21-f4d1-4726-9349-2acf708b175c" />
 
-memory: ❌
+memory: ✔
 <img width="1000" height="600" alt="cross_entropy_memory_full" src="https://github.com/user-attachments/assets/d3880443-d7d5-485e-b005-0982335bf004" />
 
 
