@@ -54,6 +54,8 @@ memory: ✔
 
 #### rope
 
+Note: The transformers version is 4.57.3. Related issue: https://github.com/linkedin/Liger-Kernel/issues/1155
+
 forward: ✔
 <img width="1000" height="600" alt="rope_speed_forward" src="https://github.com/user-attachments/assets/a9a5131d-3f89-46fe-ade4-176782f29d43" />
 
