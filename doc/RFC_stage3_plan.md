@@ -22,15 +22,17 @@
 
 ## 实测结果
 
+### High priority
+
 #### rms_norm
 
-forward: partially passed ❌
+forward: partial pass ❌
 <img width="1000" height="600" alt="rms_norm_speed_forward" src="https://github.com/user-attachments/assets/bb50e59a-5c2b-4595-a2fd-797e1903b2c8" />
 
-backward: partially passed ❌
+backward: partial pass ❌
 <img width="1000" height="600" alt="rms_norm_speed_backward" src="https://github.com/user-attachments/assets/291e775a-45a0-4563-aa9a-4b7201a0d8f2" />
 
-full: partially passed ❌
+full: partial pass ❌
 <img width="1000" height="600" alt="rms_norm_speed_full" src="https://github.com/user-attachments/assets/c3954975-45ac-47ad-8528-78abb46237f2" />
 
 memory: ✔
@@ -86,6 +88,8 @@ no_grad_forward: ❌
 memory: ✔
 <img width="1000" height="600" alt="cross_entropy_memory_full" src="https://github.com/user-attachments/assets/d3880443-d7d5-485e-b005-0982335bf004" />
 
+
+### Others
 
 #### softmax
 
@@ -227,10 +231,10 @@ memory: ✔
 forward: ✔
 <img width="1000" height="600" alt="kl_div_speed_forward" src="https://github.com/user-attachments/assets/68e41a8c-9a46-400f-b715-a70aa8a9868d" />
 
-backward: ✔
+backward: ❌
 <img width="1000" height="600" alt="kl_div_speed_backward" src="https://github.com/user-attachments/assets/4ba28e90-91e6-401e-b084-7c746c6bddfa" />
 
-full: ✔
+full: ❌
 <img width="1000" height="600" alt="kl_div_speed_full" src="https://github.com/user-attachments/assets/870ab4a4-b9c3-4e35-815e-91c417a8eacf" />
 
 memory: ✔
