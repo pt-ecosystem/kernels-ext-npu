@@ -22,9 +22,31 @@
 
 ## 实测结果
 
-### High priority
+| kernel name                     | speed forward | speed backward | speed full | memory  |
+|:--------------------------------|:-------------:|:--------------:|:----------:|:-------:|
+| rms_norm                        |       ❌       |       ❌        |     ❌      |    ✅    |
+| swiglu                          |       ✅       |       ❌        |     ❌      |    ✅    |
+| rope                            |       ✅       |       ✅        |     ✅      |    ✅    |
+| cross_entropy                   |       ❌       |       ✅        |     ❌      |    ✅    |
+| softmax                         |       ❌       |       ❌        |     ❌      |    ❌    |
+| layer_norm                      |       ❌       |       ❌        |     ❌      |    ✅    |
+| group_norm                      |       ❌       |       ❌        |     ❌      |    ✅    |
+| geglu                           |       ✅       |       ✅        |     ✅      |    ✅    |
+| fused_linear_grpo_loss_sequence |       ❌       |       ✅        |     ❌      |    ❌    |
+| fused_linear_grpo_loss_token    |       ❌       |       ✅        |     ❌      |    ❌    |
+| dyt_beta=False                  |       ❌       |       ❌        |     ❌      |    ✅    |
+| dyt_beta=True                   |       ❌       |       ❌        |     ❌      |    ✅    |
+| jsd                             |       ✅       |       ✅        |     ✅      |    ✅    |
+| kl_div                          |       ✅       |       ❌        |     ❌      |    ✅    |
+| llama4_rope                     |       ✅       |       ✅        |     ✅      |    ✅    |
+| poly_norm                       |       ✅       |       ✅        |     ✅      |    ✅    |
+| qwen2vl_mrope                   |       ✅       |       ❌        |     ✅      |    ✅    |
+| tvd                             |       ✅       |       ✅        |     ✅      |    ✅    |
 
-#### rms_norm
+
+### 1. High priority
+
+#### 1.1 rms_norm
 
 forward: partial pass ❌
 <img width="1000" height="600" alt="rms_norm_speed_forward" src="https://github.com/user-attachments/assets/bb50e59a-5c2b-4595-a2fd-797e1903b2c8" />
@@ -39,7 +61,7 @@ memory: ✔
 <img width="1000" height="600" alt="rms_norm_memory_full" src="https://github.com/user-attachments/assets/0dfcb4b2-c813-4f37-8086-9aaf4c8b93cd" />
 
 
-#### swiglu
+#### 1.2 swiglu
 
 forward: ✔
 <img width="1000" height="600" alt="swiglu_speed_forward" src="https://github.com/user-attachments/assets/08dc0c40-132c-47b8-b661-515fc746c730" />
@@ -54,7 +76,7 @@ memory: ✔
 <img width="1000" height="600" alt="swiglu_memory_full" src="https://github.com/user-attachments/assets/ccd3f20b-4751-49cc-b8ef-f98d7eb6e778" />
 
 
-#### rope
+#### 1.3 rope
 
 Note: The transformers version is 4.57.3. Related issue: https://github.com/linkedin/Liger-Kernel/issues/1155
 
@@ -71,7 +93,7 @@ memory: ✔
 <img width="1000" height="600" alt="rope_memory_full" src="https://github.com/user-attachments/assets/d2967186-63a0-47fc-8617-d55bf1902922" />
 
 
-#### cross_entropy
+#### 1.4 cross_entropy
 
 forward: ❌
 <img width="1000" height="600" alt="cross_entropy_speed_forward" src="https://github.com/user-attachments/assets/6dfc2a1e-0f00-4cbe-8514-e3147d7f829f" />
@@ -89,9 +111,9 @@ memory: ✔
 <img width="1000" height="600" alt="cross_entropy_memory_full" src="https://github.com/user-attachments/assets/d3880443-d7d5-485e-b005-0982335bf004" />
 
 
-### Others
+### 2. Others
 
-#### softmax
+#### 2.1 softmax
 
 forward: ❌
 <img width="1000" height="600" alt="softmax_speed_forward" src="https://github.com/user-attachments/assets/dd239a46-9206-44f3-b205-c5c40086b367" />
@@ -106,7 +128,7 @@ memory: ❌
 <img width="1000" height="600" alt="softmax_memory_full" src="https://github.com/user-attachments/assets/471fcb1d-42f1-482b-aaaa-0a4116164d42" />
 
 
-#### layer_norm
+#### 2.2 layer_norm
 
 forward: ❌
 <img width="1000" height="600" alt="layer_norm_speed_forward" src="https://github.com/user-attachments/assets/352caf82-0897-44b0-a2d1-a0e19fe687b8" />
@@ -121,7 +143,7 @@ memory:✔
 <img width="1000" height="600" alt="layer_norm_memory_full" src="https://github.com/user-attachments/assets/cbc19046-654d-49f2-9c0c-1c9c1fac320e" />
 
 
-#### group_norm
+#### 2.3 group_norm
 
 forward: ❌
 <img width="1000" height="600" alt="group_norm_speed_forward" src="https://github.com/user-attachments/assets/dcd7bd26-7f19-4546-9f86-dc97fa666339" />
@@ -136,7 +158,7 @@ memory: ✔
 <img width="1000" height="600" alt="group_norm_memory_full" src="https://github.com/user-attachments/assets/6e354d8f-2e46-46eb-b97c-2a25d1664a77" />
 
 
-#### geglu
+#### 2.4 geglu
 
 forward: ✔
 <img width="1000" height="600" alt="geglu_speed_forward" src="https://github.com/user-attachments/assets/3a2369b6-84a3-483c-8811-27b440cffde9" />
@@ -151,7 +173,7 @@ memory: ✔
 <img width="1000" height="600" alt="geglu_memory_full" src="https://github.com/user-attachments/assets/9969ce18-deed-4af2-a001-955c754f3c50" />
 
 
-#### fused_linear_grpo_loss_sequence
+#### 2.5 fused_linear_grpo_loss_sequence
 
 forward: ❌
 <img width="1000" height="600" alt="fused_linear_grpo_loss_sequence_speed_forward" src="https://github.com/user-attachments/assets/dce0a952-4689-4a3a-ad66-1c4541520590" />
@@ -166,7 +188,7 @@ memory: ❌
 <img width="1000" height="600" alt="fused_linear_grpo_loss_sequence_memory_full" src="https://github.com/user-attachments/assets/dcdb4b2b-e0a8-4257-9037-105fa0121684" />
 
 
-#### fused_linear_grpo_loss_token
+#### 2.6 fused_linear_grpo_loss_token
 
 forward: ❌
 <img width="1000" height="600" alt="fused_linear_grpo_loss_token_speed_forward" src="https://github.com/user-attachments/assets/0321f85e-7c17-4216-a5eb-2f9c0ec223be" />
@@ -181,7 +203,7 @@ memory: ❌
 <img width="1000" height="600" alt="fused_linear_grpo_loss_token_memory_full" src="https://github.com/user-attachments/assets/f28ec782-e046-48be-91da-e9a3adffd9be" />
 
 
-#### dyt_beta=False
+#### 2.7 dyt_beta=False
 
 forward: ❌
 <img width="1000" height="600" alt="dyt_beta=False_speed_forward" src="https://github.com/user-attachments/assets/770cda3b-55e1-4e15-90a1-3fd544e50da3" />
@@ -196,7 +218,7 @@ memory: ✔
 <img width="1000" height="600" alt="dyt_beta=False_memory_full" src="https://github.com/user-attachments/assets/8fe03e83-096c-4dd6-bdef-8b7d8e6e582f" />
 
 
-#### dyt_beta=True
+#### 2.8 dyt_beta=True
 
 forward: ❌
 <img width="1000" height="600" alt="dyt_beta=True_speed_forward" src="https://github.com/user-attachments/assets/486f1a6c-2260-4d1f-8adc-cedb01650208" />
@@ -211,7 +233,7 @@ memory: ✔
 <img width="1000" height="600" alt="dyt_beta=True_memory_full" src="https://github.com/user-attachments/assets/d81170b1-87a1-43df-96fe-b15ff06a13df" />
 
 
-#### jsd
+#### 2.9 jsd
 
 forward: ✔
 <img width="1000" height="600" alt="jsd_speed_forward" src="https://github.com/user-attachments/assets/478c09ba-6b90-44a5-abea-a0435292992d" />
@@ -226,7 +248,7 @@ memory: ✔
 <img width="1000" height="600" alt="jsd_memory_full" src="https://github.com/user-attachments/assets/d4d04fc0-d698-4a13-9dd5-7f74a43f00e4" />
 
 
-#### kl_div
+#### 2.10 kl_div
 
 forward: ✔
 <img width="1000" height="600" alt="kl_div_speed_forward" src="https://github.com/user-attachments/assets/68e41a8c-9a46-400f-b715-a70aa8a9868d" />
@@ -241,7 +263,7 @@ memory: ✔
 <img width="1000" height="600" alt="kl_div_memory_full" src="https://github.com/user-attachments/assets/069323a0-bc23-44cb-a3a0-ad9aa6a83ab5" />
 
 
-#### llama4_rope
+#### 2.11 llama4_rope
 
 forward: ✔
 <img width="1000" height="600" alt="llama4_rope_speed_forward" src="https://github.com/user-attachments/assets/00ba8d27-8095-4427-83f7-6e2a1be4cd7f" />
@@ -256,7 +278,7 @@ memory: ✔
 <img width="1000" height="600" alt="llama4_rope_memory_full" src="https://github.com/user-attachments/assets/485e61b5-3592-437b-8143-a34ac57d84e1" />
 
 
-#### poly_norm
+#### 2.12 poly_norm
 
 forward: ✔
 <img width="1000" height="600" alt="poly_norm_speed_forward" src="https://github.com/user-attachments/assets/540523a2-fcdf-4cb0-b275-27854ffda130" />
@@ -271,7 +293,7 @@ memory: ✔
 <img width="1000" height="600" alt="poly_norm_memory_full" src="https://github.com/user-attachments/assets/4db0b0a0-ccf4-4fe2-8579-cde0b8a1f62e" />
 
 
-#### qwen2vl_mrope
+#### 2.13 qwen2vl_mrope
 
 forward: ✔
 <img width="1000" height="600" alt="qwen2vl_mrope_speed_forward" src="https://github.com/user-attachments/assets/1d3fac42-0d67-4232-936f-86071c45e788" />
@@ -286,7 +308,7 @@ memory: ✔
 <img width="1000" height="600" alt="qwen2vl_mrope_memory_full" src="https://github.com/user-attachments/assets/d25ed3e5-c679-45ea-9c4c-5e196d0c094d" />
 
 
-#### tvd
+#### 2.14 tvd
 
 forward: ✔
 <img width="1000" height="600" alt="tvd_speed_forward" src="https://github.com/user-attachments/assets/83658a48-eec5-45e9-8869-106ff23a7b1e" />
