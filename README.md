@@ -22,6 +22,9 @@ Kernel sources for https://huggingface.co/kernels-ext-npu
 | rmsnorm         | [source code](https://huggingface.co/kernels-community/liger_kernels) | triton-ascend |
 
 
+## 这里之后会添加一个表格，不断地更新SOTA是哪个kernel
+#TODO
+
 ## 其他说明
 1. 目前，NPU 的主要优化手段仍是 torch_npu， triton-ascend 的优化 kernel 仅供参考。
 2. triton-ascend 的安装可参考[文档](doc/Install_triton_ascend.md)。
